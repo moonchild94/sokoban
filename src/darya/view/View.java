@@ -1,5 +1,6 @@
 package src.darya.view;
 
-public class View
+public interface View 
 {
+	
 }
