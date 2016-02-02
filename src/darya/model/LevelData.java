@@ -1,12 +1,15 @@
 package src.darya.model;
 
-import java.nio.file.Paths;
-
 public class LevelData
 {
     private int currentLevel = 1;
-    private LevelLoader levelLoader = new LevelLoader(Paths.get(".\\res\\levels.txt"));
+    private LevelLoader levelLoader = new LevelLoader();
     private GameObjects gameObjects;
+
+    public int getCurrentLevel()
+    {
+        return currentLevel;
+    }
 
     public GameObjects getGameObjects()
     {
@@ -17,5 +20,10 @@ public class LevelData
     {
         currentLevel = level;
         gameObjects = levelLoader.getLevel(level);
+    }
+
+    public void startNextLevel()
+    {
+        gameObjects = levelLoader.getLevel(++currentLevel);
     }
 }

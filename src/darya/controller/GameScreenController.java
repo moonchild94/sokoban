@@ -26,12 +26,39 @@ import src.darya.model.LevelData;
 import src.darya.model.MovableObject;
 import src.darya.model.Player;
 import src.darya.model.Wall;
-import src.darya.view.SimpleView;
 
 public class GameScreenController extends AbstractController
 {
+    private class StopwatchTask extends TimerTask
+    {
+        {
+            timerLabel = new Label(getComposite(), SWT.NONE);
+            timerLabel.setBounds(5, 5, 50, 15);
+            timerLabel.setBackground(new Color(getDisplay(), new RGB(0, 0, 0), 0));
+            timerLabel.setForeground(new Color(getDisplay(), new RGB(255, 255, 255)));
+            timerLabel.setText("0");
+        }
+
+        @Override
+        public void run()
+        {
+            Display.getDefault().asyncExec(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    int time = Integer.parseInt(timerLabel.getText());
+                    timerLabel.setText(String.valueOf(++time));
+                }
+            });
+        }
+    }
+
     private LevelData levelData;
-    private Map<GameObject, AbstractController> gameObjectSimpleControllersMap = Maps.newHashMap();
+    private Map<GameObject, SimpleController> simpleControllers = Maps.newHashMap();
+
+    private TimerTask timerTask;
+    private Label timerLabel;
 
     public GameScreenController(Display display, Composite composite)
     {
@@ -171,52 +198,47 @@ public class GameScreenController extends AbstractController
         return false;
     }
 
+    private void clear()
+    {
+        for (Map.Entry<GameObject, SimpleController> pair : simpleControllers.entrySet())
+        {
+            pair.getValue().getView().getComposite().dispose();
+        }
+
+        simpleControllers.clear();
+
+        timerLabel.dispose();
+    }
+
     private void completed()
     {
-        MessageBox messageBox = new MessageBox(getComposite().getShell());
-        String message = "Level completed!";
-        messageBox.setMessage(message);
-        messageBox.open();
+        showMessage();
+        timerTask.cancel();
+        clear();
+        levelData.startNextLevel();
+        createTimer();
+        createSimpleViews();
     }
 
     private void createSimpleViews()
     {
         for (GameObject gameObject : levelData.getGameObjects().getAll())
         {
-            AbstractController simpleViewController = SimpleViewControllerFactory
-                    .getSimpleViewController(gameObject.getClass(), getDisplay(), getComposite());
-            if (simpleViewController != null)
+            SimpleController simpleController = SimpleControllerFactory.getSimpleViewController(gameObject.getClass(),
+                    getDisplay(), getComposite());
+            if (simpleController != null)
             {
-                ((SimpleView)(simpleViewController.getView())).setCoordinates(gameObject.getX(), gameObject.getY());
-                gameObjectSimpleControllersMap.put(gameObject, simpleViewController);
+                simpleController.getView().setCoordinates(gameObject.getX(), gameObject.getY());
+                simpleControllers.put(gameObject, simpleController);
             }
         }
     }
 
     private void createTimer()
     {
-        Label timerLabel = new Label(getComposite(), SWT.NONE);
-        timerLabel.setBounds(5, 5, 50, 15);
-        timerLabel.setBackground(new Color(getDisplay(), new RGB(0, 0, 0), 0));
-        timerLabel.setForeground(new Color(getDisplay(), new RGB(255, 255, 255)));
-        timerLabel.setText("0");
-        new Timer().schedule(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                Display.getDefault().asyncExec(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        int time = Integer.parseInt(timerLabel.getText());
-                        timerLabel.setText(String.valueOf(++time));
-                    }
-                });
-            }
-        }, 1, 1000);
-
+        Timer timer = new Timer();
+        timerTask = new StopwatchTask();
+        timer.schedule(timerTask, 1, 1000);
     }
 
     private void move(Direction direction)
@@ -241,7 +263,15 @@ public class GameScreenController extends AbstractController
     private void moveGameObject(MovableObject movableObject, Direction direction)
     {
         movableObject.move(direction);
-        AbstractController simpleController = gameObjectSimpleControllersMap.get(movableObject);
-        ((SimpleView)(simpleController.getView())).setCoordinates(movableObject.getX(), movableObject.getY());
+        SimpleController simpleController = simpleControllers.get(movableObject);
+        (simpleController.getView()).setCoordinates(movableObject.getX(), movableObject.getY());
+    }
+
+    private void showMessage()
+    {
+        MessageBox messageBox = new MessageBox(getComposite().getShell());
+        String message = "Level completed!";
+        messageBox.setMessage(message);
+        messageBox.open();
     }
 }

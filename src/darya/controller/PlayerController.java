@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Display;
 
 import src.darya.view.PlayerView;
 
-public class PlayerController extends AbstractController
+public class PlayerController extends SimpleController
 {
     public PlayerController(Display display, Composite composite)
     {

@@ -13,23 +13,23 @@ import src.darya.model.Home;
 import src.darya.model.Player;
 import src.darya.model.Wall;
 
-public class SimpleViewControllerFactory
+public class SimpleControllerFactory
 {
-    private static Map<Class<? extends GameObject>, Class<? extends AbstractController>> simpleViewControllerMap;
+    private static Map<Class<? extends GameObject>, Class<? extends SimpleController>> simpleControllerMap;
 
     static
     {
-        simpleViewControllerMap = Maps.newHashMap();
-        simpleViewControllerMap.put(Box.class, BoxController.class);
-        simpleViewControllerMap.put(Home.class, HomeController.class);
-        simpleViewControllerMap.put(Wall.class, WallController.class);
-        simpleViewControllerMap.put(Player.class, PlayerController.class);
+        simpleControllerMap = Maps.newHashMap();
+        simpleControllerMap.put(Box.class, BoxController.class);
+        simpleControllerMap.put(Home.class, HomeController.class);
+        simpleControllerMap.put(Wall.class, WallController.class);
+        simpleControllerMap.put(Player.class, PlayerController.class);
     }
 
-    public static AbstractController getSimpleViewController(Class<? extends GameObject> simpleViewClass,
-            Display display, Composite composite)
+    public static SimpleController getSimpleViewController(Class<? extends GameObject> simpleViewClass, Display display,
+            Composite composite)
     {
-        for (Map.Entry<Class<? extends GameObject>, Class<? extends AbstractController>> pair : simpleViewControllerMap
+        for (Map.Entry<Class<? extends GameObject>, Class<? extends SimpleController>> pair : simpleControllerMap
                 .entrySet())
         {
             if (pair.getKey().equals(simpleViewClass))

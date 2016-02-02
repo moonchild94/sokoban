@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Display;
 
 import src.darya.view.BoxView;
 
-public class BoxController extends AbstractController
+public class BoxController extends SimpleController
 {
     public BoxController(Display display, Composite composite)
     {

@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Display;
 
 import src.darya.view.WallView;
 
-public class WallController extends AbstractController
+public class WallController extends SimpleController
 {
     public WallController(Display display, Composite composite)
     {

@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Display;
 
 import src.darya.view.HomeView;
 
-public class HomeController extends AbstractController
+public class HomeController extends SimpleController
 {
     public HomeController(Display display, Composite composite)
     {

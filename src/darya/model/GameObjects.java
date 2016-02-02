@@ -2,14 +2,28 @@ package src.darya.model;
 
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.google.common.collect.Sets;
 
-public class GameObjects 
+@XmlRootElement
+public class GameObjects
 {
+    @XmlElementWrapper(name = "wallSet")
     private Set<Wall> walls;
+    @XmlElementWrapper(name = "boxSet")
     private Set<Box> boxes;
+    @XmlElementWrapper(name = "homeSet")
     private Set<Home> homes;
+    @XmlElement
     private Player player;
+
+    public GameObjects()
+    {
+
+    }
 
     public GameObjects(Set<Wall> walls, Set<Box> boxes, Set<Home> homes, Player player)
     {
@@ -19,9 +33,15 @@ public class GameObjects
         this.player = player;
     }
 
-    public Set<Wall> getWalls()
+    public Set<GameObject> getAll()
     {
-        return walls;
+        Set<GameObject> gameObjects = Sets.newHashSet();
+        gameObjects.addAll(walls);
+        gameObjects.addAll(boxes);
+        gameObjects.addAll(homes);
+        gameObjects.add(player);
+
+        return gameObjects;
     }
 
     public Set<Box> getBoxes()
@@ -39,14 +59,8 @@ public class GameObjects
         return player;
     }
 
-    public Set<GameObject> getAll()
+    public Set<Wall> getWalls()
     {
-        Set<GameObject> gameObjects = Sets.newHashSet();
-        gameObjects.addAll(walls);
-        gameObjects.addAll(boxes);
-        gameObjects.addAll(homes);
-        gameObjects.add(player);
-
-        return gameObjects;
+        return walls;
     }
 }

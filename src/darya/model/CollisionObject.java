@@ -4,6 +4,11 @@ import src.darya.common.Constants;
 
 public abstract class CollisionObject extends GameObject
 {
+    public CollisionObject()
+    {
+
+    }
+
     public CollisionObject(int x, int y)
     {
         super(x, y);
@@ -16,21 +21,20 @@ public abstract class CollisionObject extends GameObject
 
         switch (direction)
         {
-            case LEFT:
-                newX -= Constants.FIELD_SELL_SIZE;
-                break;
-            case RIGHT:
-                newX += Constants.FIELD_SELL_SIZE;
-                break;
-            case UP:
-                newY -= Constants.FIELD_SELL_SIZE;
-                break;
-            case DOWN:
-                newY += Constants.FIELD_SELL_SIZE;
-                break;
+        case LEFT:
+            newX -= Constants.FIELD_SELL_SIZE;
+            break;
+        case RIGHT:
+            newX += Constants.FIELD_SELL_SIZE;
+            break;
+        case UP:
+            newY -= Constants.FIELD_SELL_SIZE;
+            break;
+        case DOWN:
+            newY += Constants.FIELD_SELL_SIZE;
+            break;
         }
 
         return newX == gameObject.getX() && newY == gameObject.getY();
     }
 }
-
