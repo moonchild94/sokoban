@@ -1,5 +1,7 @@
 package src.darya.model;
 
+import src.darya.common.Constants;
+
 public abstract class CollisionObject extends GameObject
 {
     public CollisionObject(int x, int y)
@@ -15,16 +17,16 @@ public abstract class CollisionObject extends GameObject
         switch (direction)
         {
             case LEFT:
-                newX -= Model.FIELD_SELL_SIZE;
+                newX -= Constants.FIELD_SELL_SIZE;
                 break;
             case RIGHT:
-                newX += Model.FIELD_SELL_SIZE;
+                newX += Constants.FIELD_SELL_SIZE;
                 break;
             case UP:
-                newY -= Model.FIELD_SELL_SIZE;
+                newY -= Constants.FIELD_SELL_SIZE;
                 break;
             case DOWN:
-                newY += Model.FIELD_SELL_SIZE;
+                newY += Constants.FIELD_SELL_SIZE;
                 break;
         }
 

@@ -2,22 +2,12 @@ package src.darya.model;
 
 public abstract class GameObject 
 {
-	private int x, y, width, height;
+	private int x, y;
 
 	public GameObject(int x, int y) 
 	{
 		this.x = x;
 		this.y = y;
-		this.width = Model.FIELD_SELL_SIZE;
-		this.height = Model.FIELD_SELL_SIZE;
-	}
-
-	public GameObject(int x, int y, int width, int height) 
-	{
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
 	}
 
 	public int getX() 
@@ -30,16 +20,6 @@ public abstract class GameObject
 		this.x = x;
 	}
 
-	public int getWidth() 
-	{
-		return width;
-	}
-
-	public void setWidth(int width) 
-	{
-		this.width = width;
-	}
-
 	public int getY() 
 	{
 		return y;
@@ -49,16 +29,4 @@ public abstract class GameObject
 	{
 		this.y = y;
 	}
-
-	public int getHeight() 
-	{
-		return height;
-	}
-
-	public void setHeight(int height) 
-	{
-		this.height = height;
-	}
-	
-	public abstract String getImageView();
 }

@@ -1,21 +1,19 @@
 package src.darya.controller;
 
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 
 public class OptionsScreenController extends AbstractController
 {
-	public OptionsScreenController(Display display, Shell shell) 
-	{
-		super(display, shell);
-		// TODO Auto-generated constructor stub
-	}
+    public OptionsScreenController(Display display, Composite composite)
+    {
+        super(display, composite);
+    }
 
-	@Override
-	protected void createView() 
-	{
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    protected void createView()
+    {
+
+    }
 
 }

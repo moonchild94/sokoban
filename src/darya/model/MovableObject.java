@@ -1,5 +1,7 @@
 package src.darya.model;
 
+import src.darya.common.Constants;
+
 public abstract class MovableObject extends CollisionObject
 {
     public MovableObject(int x, int y) 
@@ -12,16 +14,16 @@ public abstract class MovableObject extends CollisionObject
     	switch (direction)
         {
             case LEFT:
-                this.setX(this.getX() - Model.FIELD_SELL_SIZE);
+                this.setX(this.getX() - Constants.FIELD_SELL_SIZE);
                 break;
             case RIGHT:
-            	this.setX(this.getX() + Model.FIELD_SELL_SIZE);
+            	this.setX(this.getX() + Constants.FIELD_SELL_SIZE);
                 break;
             case UP:
-            	this.setY(this.getY() - Model.FIELD_SELL_SIZE);
+            	this.setY(this.getY() - Constants.FIELD_SELL_SIZE);
                 break;
             case DOWN:
-            	this.setY(this.getY() + Model.FIELD_SELL_SIZE);
+            	this.setY(this.getY() + Constants.FIELD_SELL_SIZE);
                 break;
         }
     }
