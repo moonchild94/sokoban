@@ -35,11 +35,11 @@ public class GameObjects
 
     public Set<GameObject> getAll()
     {
-        Set<GameObject> gameObjects = Sets.newHashSet();
+        Set<GameObject> gameObjects = Sets.newLinkedHashSet();
+        gameObjects.add(player);
         gameObjects.addAll(walls);
         gameObjects.addAll(boxes);
         gameObjects.addAll(homes);
-        gameObjects.add(player);
 
         return gameObjects;
     }

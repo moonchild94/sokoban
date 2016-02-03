@@ -14,7 +14,7 @@ public class BoxController extends SimpleController
     }
 
     @Override
-    protected void createView()
+    protected void createView(boolean... params)
     {
         setView(new BoxView(getDisplay(), getComposite()));
     }

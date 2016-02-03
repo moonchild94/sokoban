@@ -9,10 +9,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 
 import com.google.common.collect.Maps;
@@ -29,14 +34,52 @@ import src.darya.model.Wall;
 
 public class GameScreenController extends AbstractController
 {
+    private class GameKeyListener implements KeyListener
+    {
+        @Override
+        public void keyPressed(KeyEvent arg0)
+        {
+            switch (arg0.keyCode)
+            {
+            case SWT.ARROW_LEFT:
+                move(Direction.LEFT);
+                break;
+            case SWT.ARROW_UP:
+                move(Direction.UP);
+                break;
+            case SWT.ARROW_RIGHT:
+                move(Direction.RIGHT);
+                break;
+            case SWT.ARROW_DOWN:
+                move(Direction.DOWN);
+                break;
+            case SWT.F5:
+                update();
+                break;
+            case SWT.ESC:
+                timerTask.cancel();
+                removeListeners();
+                GameController.getInstance().goToScene(ScreenType.MENU);
+                break;
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent arg0)
+        {
+
+        }
+    }
+
     private class StopwatchTask extends TimerTask
     {
         {
             timerLabel = new Label(getComposite(), SWT.NONE);
-            timerLabel.setBounds(5, 5, 50, 15);
+            timerLabel.setBounds(5, 5, 100, 35);
+            timerLabel.setFont(new Font(getDisplay(), "Arial", 20, SWT.NONE));
             timerLabel.setBackground(new Color(getDisplay(), new RGB(0, 0, 0), 0));
             timerLabel.setForeground(new Color(getDisplay(), new RGB(255, 255, 255)));
-            timerLabel.setText("0");
+            timerLabel.setText(String.valueOf(levelTime));
         }
 
         @Override
@@ -47,8 +90,7 @@ public class GameScreenController extends AbstractController
                 @Override
                 public void run()
                 {
-                    int time = Integer.parseInt(timerLabel.getText());
-                    timerLabel.setText(String.valueOf(++time));
+                    timerLabel.setText(String.valueOf(++levelTime));
                 }
             });
         }
@@ -58,7 +100,9 @@ public class GameScreenController extends AbstractController
     private Map<GameObject, SimpleController> simpleControllers = Maps.newHashMap();
 
     private TimerTask timerTask;
-    private Label timerLabel;
+    private Label levelLabel, timerLabel;
+    private KeyListener keyListener;
+    private long levelTime = 0;
 
     public GameScreenController(Display display, Composite composite)
     {
@@ -69,50 +113,55 @@ public class GameScreenController extends AbstractController
     public void setLevel(int level)
     {
         levelData.startLevel(level);
+        levelTime = 0;
     }
 
     @Override
-    protected void createView()
+    protected void createView(boolean... isNewGame)
     {
-        setLevel(1);
+        if (isNewGame.length == 1 && isNewGame[0])
+        {
+            setLevel(1);
+        }
+
+        addHelpButton();
         createSimpleViews();
-        createTimer();
         addListeners();
+        createTimer();
+        initLevelLabel();
+    }
+
+    private void addHelpButton()
+    {
+        Button helpButton = new Button(getComposite(), SWT.PUSH);
+        helpButton.setBounds(220, 5, 35, 35);
+        Image helpButtonImage = new Image(getDisplay(), "./resources/question.png");
+        helpButton.setImage(helpButtonImage);
+        helpButton.addListener(SWT.MouseDown, new Listener()
+        {
+            @Override
+            public void handleEvent(Event arg0)
+            {
+                String message =
+                //@formatter:off
+                                    "Help:\n"
+                                    + "1. Restart - F5\n"
+                                    + "2. Menu - ESC\n"
+                                    + "3. Up - Arrow up\n"
+                                    + "4. Down - Arrow down\n"
+                                    + "5. Right - Arrow right\n"
+                                    + "6. Left - Arrow left\n"
+                                    + "7. Jump - Space";
+                //@formatter:on
+                showMessage(message);
+            }
+        });
     }
 
     private void addListeners()
     {
-        getComposite().addKeyListener(new KeyListener()
-        {
-            @Override
-            public void keyPressed(KeyEvent arg0)
-            {
-                switch (arg0.keyCode)
-                {
-                case SWT.ARROW_LEFT:
-                    move(Direction.LEFT);
-                    break;
-                case SWT.ARROW_UP:
-                    move(Direction.UP);
-                    break;
-                case SWT.ARROW_RIGHT:
-                    move(Direction.RIGHT);
-                    break;
-                case SWT.ARROW_DOWN:
-                    move(Direction.DOWN);
-                    break;
-                case SWT.ESC:
-                    GameController.getInstance().goToScene(ScreenType.MENU);
-                    break;
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent arg0)
-            {
-
-            }
-        });
+        keyListener = new GameKeyListener();
+        getComposite().addKeyListener(keyListener);
     }
 
     private boolean checkBoxCollision(Direction direction)
@@ -212,10 +261,12 @@ public class GameScreenController extends AbstractController
 
     private void completed()
     {
-        showMessage();
+        showMessage("Level completed!");
         timerTask.cancel();
         clear();
         levelData.startNextLevel();
+        levelTime = 0;
+        updateLevelLabel();
         createTimer();
         createSimpleViews();
     }
@@ -241,6 +292,17 @@ public class GameScreenController extends AbstractController
         timer.schedule(timerTask, 1, 1000);
     }
 
+    private void initLevelLabel()
+    {
+        levelLabel = new Label(getComposite(), SWT.NONE);
+        levelLabel.setBounds(110, 5, 100, 35);
+        levelLabel.setFont(new Font(getDisplay(), "Arial", 20, SWT.NONE));
+        levelLabel.setBackground(new Color(getDisplay(), new RGB(0, 0, 0), 0));
+        levelLabel.setForeground(new Color(getDisplay(), new RGB(255, 255, 255)));
+        updateLevelLabel();
+
+    }
+
     private void move(Direction direction)
     {
         Player player = levelData.getGameObjects().getPlayer();
@@ -264,14 +326,33 @@ public class GameScreenController extends AbstractController
     {
         movableObject.move(direction);
         SimpleController simpleController = simpleControllers.get(movableObject);
-        (simpleController.getView()).setCoordinates(movableObject.getX(), movableObject.getY());
+        simpleController.getView().setCoordinates(movableObject.getX(), movableObject.getY());
     }
 
-    private void showMessage()
+    private void removeListeners()
+    {
+        getComposite().removeKeyListener(keyListener);
+    }
+
+    private void showMessage(String message)
     {
         MessageBox messageBox = new MessageBox(getComposite().getShell());
-        String message = "Level completed!";
         messageBox.setMessage(message);
         messageBox.open();
+    }
+
+    private void update()
+    {
+        timerTask.cancel();
+        clear();
+        setLevel(levelData.getCurrentLevel());
+        createTimer();
+        createSimpleViews();
+    }
+
+    private void updateLevelLabel()
+    {
+        String currentLevel = String.valueOf(levelData.getCurrentLevel());
+        levelLabel.setText(currentLevel + " level");
     }
 }

@@ -14,7 +14,7 @@ public class PlayerController extends SimpleController
     }
 
     @Override
-    protected void createView()
+    protected void createView(boolean... params)
     {
         setView(new PlayerView(getDisplay(), getComposite()));
     }

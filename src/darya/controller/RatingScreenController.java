@@ -12,7 +12,7 @@ public class RatingScreenController extends AbstractController
     }
 
     @Override
-    protected void createView()
+    protected void createView(boolean... params)
     {
 
     }

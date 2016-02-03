@@ -41,7 +41,7 @@ public class MenuView implements View
         int buttonX = (composite.getBounds().width - BUTTON_WIDTH) / 2;
 
         Button newGameButton = new Button(composite, SWT.PUSH);
-        buttons.put(MenuElement.GAME, newGameButton);
+        buttons.put(MenuElement.NEW_GAME, newGameButton);
         Image newGameImage = new Image(display, "./resources/newGameImage.jpg");
         newGameButton.setFont(boldFont);
         newGameButton.setImage(newGameImage);
@@ -62,18 +62,19 @@ public class MenuView implements View
         ratingButton.setImage(ratingImage);
         ratingButton.setBounds(buttonX, continueButton.getBounds().y + BUTTON_HEIGHT + 20, BUTTON_WIDTH, BUTTON_HEIGHT);
 
-        Button optionsButton = new Button(composite, SWT.PUSH);
-        buttons.put(MenuElement.OPTIONS, optionsButton);
-        Image optionsImage = new Image(display, "./resources/optionsImage.jpg");
-        optionsButton.setFont(boldFont);
-        optionsButton.setImage(optionsImage);
-        optionsButton.setBounds(buttonX, ratingButton.getBounds().y + BUTTON_HEIGHT + 20, BUTTON_WIDTH, BUTTON_HEIGHT);
+        Button mapEditorButton = new Button(composite, SWT.PUSH);
+        buttons.put(MenuElement.MAP_EDITOR, mapEditorButton);
+        Image optionsImage = new Image(display, "./resources/mapEditorImage.jpg");
+        mapEditorButton.setFont(boldFont);
+        mapEditorButton.setImage(optionsImage);
+        mapEditorButton.setBounds(buttonX, ratingButton.getBounds().y + BUTTON_HEIGHT + 20, BUTTON_WIDTH,
+                BUTTON_HEIGHT);
 
         Button exitButton = new Button(composite, SWT.PUSH);
         buttons.put(MenuElement.EXIT, exitButton);
         Image exitImage = new Image(display, "./resources/exitImage.jpg");
         exitButton.setFont(boldFont);
         exitButton.setImage(exitImage);
-        exitButton.setBounds(buttonX, optionsButton.getBounds().y + BUTTON_HEIGHT + 20, BUTTON_WIDTH, BUTTON_HEIGHT);
+        exitButton.setBounds(buttonX, mapEditorButton.getBounds().y + BUTTON_HEIGHT + 20, BUTTON_WIDTH, BUTTON_HEIGHT);
     }
 }

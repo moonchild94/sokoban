@@ -1,6 +1,6 @@
 package src.darya.controller;
 
-public enum ScreenType 
+public enum ScreenType
 {
-	MENU, GAME, OPTIONS, RATING
+    MENU, NEW_GAME, MAP_EDITOR, RATING, CONTINUE
 }

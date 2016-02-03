@@ -14,23 +14,31 @@ import src.darya.view.MenuView;
 
 public class MenuScreenController extends AbstractController
 {
+    private boolean isFirst = true;
+
     public MenuScreenController(Display display, Composite composite)
     {
         super(display, composite);
     }
 
     @Override
-    protected void createView()
+    protected void createView(boolean... params)
     {
         MenuView menu = new MenuView(getDisplay(), getComposite());
         Map<MenuElement, Button> buttons = menu.getButtons();
 
-        buttons.get(MenuElement.GAME).addListener(SWT.MouseDown, new Listener()
+        if (isFirst)
+        {
+            buttons.get(MenuElement.CONTINUE).setEnabled(false);
+        }
+        isFirst = false;
+
+        buttons.get(MenuElement.NEW_GAME).addListener(SWT.MouseDown, new Listener()
         {
             @Override
             public void handleEvent(Event arg0)
             {
-                GameController.getInstance().goToScene(ScreenType.GAME);
+                GameController.getInstance().goToScene(ScreenType.NEW_GAME);
             }
         });
 
@@ -39,7 +47,7 @@ public class MenuScreenController extends AbstractController
             @Override
             public void handleEvent(Event arg0)
             {
-                GameController.getInstance().goToScene(ScreenType.GAME);
+                GameController.getInstance().goToScene(ScreenType.CONTINUE);
             }
         });
 
@@ -52,12 +60,12 @@ public class MenuScreenController extends AbstractController
             }
         });
 
-        buttons.get(MenuElement.OPTIONS).addListener(SWT.MouseDown, new Listener()
+        buttons.get(MenuElement.MAP_EDITOR).addListener(SWT.MouseDown, new Listener()
         {
             @Override
             public void handleEvent(Event arg0)
             {
-                GameController.getInstance().goToScene(ScreenType.OPTIONS);
+                GameController.getInstance().goToScene(ScreenType.MAP_EDITOR);
             }
         });
 
@@ -67,7 +75,6 @@ public class MenuScreenController extends AbstractController
             public void handleEvent(Event arg0)
             {
                 GameController.getInstance().exit();
-                ;
             }
         });
     }

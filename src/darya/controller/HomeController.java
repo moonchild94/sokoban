@@ -14,7 +14,7 @@ public class HomeController extends SimpleController
     }
 
     @Override
-    protected void createView()
+    protected void createView(boolean... params)
     {
         setView(new HomeView(getDisplay(), getComposite()));
     }

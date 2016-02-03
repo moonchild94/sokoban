@@ -37,5 +37,5 @@ public abstract class AbstractController implements IController
         this.view = view;
     }
 
-    protected abstract void createView();
+    protected abstract void createView(boolean... params);
 }

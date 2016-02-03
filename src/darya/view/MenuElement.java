@@ -1,6 +1,6 @@
 package src.darya.view;
 
-public enum MenuElement 
+public enum MenuElement
 {
-	GAME, CONTINUE, RATING, OPTIONS, EXIT
+    NEW_GAME, CONTINUE, RATING, MAP_EDITOR, EXIT
 }

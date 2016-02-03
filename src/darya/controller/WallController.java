@@ -14,7 +14,7 @@ public class WallController extends SimpleController
     }
 
     @Override
-    protected void createView()
+    protected void createView(boolean... params)
     {
         setView(new WallView(getDisplay(), getComposite()));
     }
