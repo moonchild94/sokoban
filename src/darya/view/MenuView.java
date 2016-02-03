@@ -16,9 +16,10 @@ public class MenuView implements View
 {
     private static final int BUTTON_WIDTH = 220;
     private static final int BUTTON_HEIGHT = 77;
-    private Display display;
 
+    private Display display;
     private Composite composite;
+
     private Map<MenuElement, Button> buttons = Maps.newHashMap();
 
     public MenuView(Display display, Composite composite)

@@ -110,6 +110,16 @@ public class GameScreenController extends AbstractController
         levelData = new LevelData();
     }
 
+    public int getMaxLevel()
+    {
+        return levelData.getMaxLevel();
+    }
+
+    public int incrementMaxLevel()
+    {
+        return levelData.incrementMaxLevel();
+    }
+
     public void setLevel(int level)
     {
         levelData.startLevel(level);
@@ -129,6 +139,7 @@ public class GameScreenController extends AbstractController
         addListeners();
         createTimer();
         initLevelLabel();
+        checkCompletion();
     }
 
     private void addHelpButton()
@@ -154,6 +165,7 @@ public class GameScreenController extends AbstractController
                                     + "7. Jump - Space";
                 //@formatter:on
                 showMessage(message);
+                getComposite().forceFocus();
             }
         });
     }
@@ -261,14 +273,26 @@ public class GameScreenController extends AbstractController
 
     private void completed()
     {
-        showMessage("Level completed!");
         timerTask.cancel();
-        clear();
-        levelData.startNextLevel();
-        levelTime = 0;
-        updateLevelLabel();
-        createTimer();
-        createSimpleViews();
+        if (isLastLevel())
+        {
+            String message = isLastDefaultLevel() ? "Congratulations! You won!" : "An additional level completed!";
+            showMessage(message);
+            showMessage("Use map editor to play more level");
+
+            removeListeners();
+            GameController.getInstance().goToScene(ScreenType.MENU);
+        }
+        else
+        {
+            showMessage("Level completed!");
+            clear();
+            levelData.startNextLevel();
+            levelTime = 0;
+            updateLevelLabel();
+            createTimer();
+            createSimpleViews();
+        }
     }
 
     private void createSimpleViews()
@@ -301,6 +325,16 @@ public class GameScreenController extends AbstractController
         levelLabel.setForeground(new Color(getDisplay(), new RGB(255, 255, 255)));
         updateLevelLabel();
 
+    }
+
+    private boolean isLastDefaultLevel()
+    {
+        return levelData.getCurrentLevel() == levelData.getMaxDefaultLevel();
+    }
+
+    private boolean isLastLevel()
+    {
+        return levelData.getCurrentLevel() == levelData.getMaxLevel();
     }
 
     private void move(Direction direction)

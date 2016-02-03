@@ -25,6 +25,7 @@ public class MenuScreenController extends AbstractController
     protected void createView(boolean... params)
     {
         MenuView menu = new MenuView(getDisplay(), getComposite());
+        setView(menu);
         Map<MenuElement, Button> buttons = menu.getButtons();
 
         if (isFirst)
@@ -38,7 +39,7 @@ public class MenuScreenController extends AbstractController
             @Override
             public void handleEvent(Event arg0)
             {
-                GameController.getInstance().goToScene(ScreenType.NEW_GAME);
+                GameController.getInstance().goToScene(ScreenType.GAME);
             }
         });
 

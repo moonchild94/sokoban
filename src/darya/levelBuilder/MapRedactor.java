@@ -20,6 +20,7 @@ import src.darya.model.GameObjects;
 import src.darya.model.Home;
 import src.darya.model.Player;
 import src.darya.model.Wall;
+import src.darya.view.Cell;
 
 public class MapRedactor
 {

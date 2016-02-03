@@ -37,10 +37,15 @@ public class GameController implements IController
         System.exit(0);
     }
 
+    public AbstractController getController(ScreenType screenType)
+    {
+        return screens.get(screenType);
+    }
+
     public void goToScene(ScreenType screenType)
     {
         clear();
-        if (ScreenType.NEW_GAME.equals(screenType))
+        if (ScreenType.GAME.equals(screenType))
         {
             screens.get(screenType).createView(true);
         }
@@ -56,8 +61,8 @@ public class GameController implements IController
         this.composite = composite;
 
         screens.put(ScreenType.MENU, new MenuScreenController(display, composite));
-        screens.put(ScreenType.NEW_GAME, new GameScreenController(display, composite));
-        screens.put(ScreenType.CONTINUE, screens.get(ScreenType.NEW_GAME));
+        screens.put(ScreenType.GAME, new GameScreenController(display, composite));
+        screens.put(ScreenType.CONTINUE, screens.get(ScreenType.GAME));
         screens.put(ScreenType.RATING, new RatingScreenController(display, composite));
         screens.put(ScreenType.MAP_EDITOR, new MapEditorScreenController(display, composite));
     }

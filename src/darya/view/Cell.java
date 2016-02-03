@@ -1,4 +1,4 @@
-package src.darya.levelBuilder;
+package src.darya.view;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
 import src.darya.common.Constants;
+import src.darya.levelBuilder.TypeContent;
 
 public class Cell extends Composite
 {
@@ -34,6 +35,13 @@ public class Cell extends Composite
         this.i = i;
         this.j = j;
         addListener();
+    }
+
+    public void clear()
+    {
+        count = 0;
+        typeContent = TypeContent.EMPTY;
+        inner.setBackgroundImage(null);
     }
 
     public int getI()
