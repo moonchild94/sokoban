@@ -8,6 +8,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.Sets;
 
+/**
+ * Модель игрового уровня со всеми объектами на нем.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 @XmlRootElement
 public class GameObjects
 {
@@ -22,7 +27,6 @@ public class GameObjects
 
     public GameObjects()
     {
-
     }
 
     public GameObjects(Set<Wall> walls, Set<Box> boxes, Set<Home> homes, Player player)

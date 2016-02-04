@@ -8,6 +8,11 @@ import org.eclipse.swt.widgets.Listener;
 
 import src.darya.common.Constants;
 
+/**
+ * Отображение ячейке в редакторе карт.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public class Cell extends Composite
 {
     private int i;
@@ -69,22 +74,25 @@ public class Cell extends Composite
                 switch (count)
                 {
                 case 1:
-                    Image wallImage = new Image(getDisplay(), Constants.DIRECTORY_PREFIX + "/wallImage.jpg");
+                    Image wallImage = new Image(getDisplay(),
+                            Constants.DIRECTORY_GAME_OBJECTS_PREFIX + "/wallImage.jpg");
                     inner.setBackgroundImage(wallImage);
                     typeContent = TypeContent.WALL;
                     break;
                 case 2:
-                    Image boxImage = new Image(getDisplay(), Constants.DIRECTORY_PREFIX + "/boxImage.jpg");
+                    Image boxImage = new Image(getDisplay(), Constants.DIRECTORY_GAME_OBJECTS_PREFIX + "/boxImage.jpg");
                     inner.setBackgroundImage(boxImage);
                     typeContent = TypeContent.BOX;
                     break;
                 case 3:
-                    Image homeImage = new Image(getDisplay(), Constants.DIRECTORY_PREFIX + "/homeImage.png");
+                    Image homeImage = new Image(getDisplay(),
+                            Constants.DIRECTORY_GAME_OBJECTS_PREFIX + "/homeImage.png");
                     inner.setBackgroundImage(homeImage);
                     typeContent = TypeContent.HOME;
                     break;
                 case 4:
-                    Image playerImage = new Image(getDisplay(), Constants.DIRECTORY_PREFIX + "/playerImage.png");
+                    Image playerImage = new Image(getDisplay(),
+                            Constants.DIRECTORY_GAME_OBJECTS_PREFIX + "/playerImage.png");
                     inner.setBackgroundImage(playerImage);
                     typeContent = TypeContent.PLAYER;
                     break;

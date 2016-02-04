@@ -7,10 +7,17 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 
 import src.darya.common.GameMusic;
 import src.darya.view.OptionsView;
 
+/**
+ * Контроллер экрана опций.
+ * @author Калмыкова Д.В.
+ * @sinse 4 февр. 2016 г.
+ */
 public class OptionsScreenController extends AbstractController
 {
     private KeyListener keyListener;
@@ -21,12 +28,13 @@ public class OptionsScreenController extends AbstractController
     }
 
     @Override
-    protected void createView(boolean... params)
+    protected void createView()
     {
         OptionsView optionsView = new OptionsView(getComposite());
         setView(optionsView);
         addSelectionListener(optionsView);
         addKeyListener();
+        addSaveListener(optionsView);
     }
 
     private void addKeyListener()
@@ -38,24 +46,34 @@ public class OptionsScreenController extends AbstractController
             {
                 if (arg0.keyCode == SWT.ESC)
                 {
-                    removeListeners();
-                    GameController.getInstance().goToScene(ScreenType.MENU);
+                    goToMenu();
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent arg0)
             {
-
             }
         };
         getComposite().addKeyListener(keyListener);
     }
 
+    private void addSaveListener(OptionsView optionsView)
+    {
+        Button saveButton = optionsView.getSaveButton();
+        saveButton.addListener(SWT.MouseDown, new Listener()
+        {
+            @Override
+            public void handleEvent(Event arg0)
+            {
+                goToMenu();
+            }
+        });
+    }
+
     private void addSelectionListener(OptionsView optionsView)
     {
         Button switcher = optionsView.getSwitcher();
-
         switcher.addSelectionListener(new SelectionAdapter()
         {
             @Override
@@ -84,8 +102,9 @@ public class OptionsScreenController extends AbstractController
         }
     }
 
-    private void removeListeners()
+    private void goToMenu()
     {
         getComposite().removeKeyListener(keyListener);
+        ScreenSwitchController.getInstance().goToScene(ScreenType.MENU);
     }
 }

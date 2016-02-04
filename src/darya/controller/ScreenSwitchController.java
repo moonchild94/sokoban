@@ -7,15 +7,20 @@ import org.eclipse.swt.widgets.Control;
 
 import com.google.common.collect.Maps;
 
-public class GameController implements IController
+/**
+ * Класс, отвечающий за переходы между экранами в игре.
+ * @author Калмыкова Д.В.
+ * @sinse 4 февр. 2016 г.
+ */
+public class ScreenSwitchController implements IController
 {
-    private static GameController instance;
+    private static ScreenSwitchController instance;
 
-    public static GameController getInstance()
+    public static ScreenSwitchController getInstance()
     {
         if (instance == null)
         {
-            instance = new GameController();
+            instance = new ScreenSwitchController();
         }
         return instance;
     }
@@ -24,9 +29,8 @@ public class GameController implements IController
     private Composite composite;
     private Map<ScreenType, AbstractController> screens = Maps.newHashMap();
 
-    private GameController()
+    private ScreenSwitchController()
     {
-
     }
 
     public void exit()
@@ -43,14 +47,13 @@ public class GameController implements IController
     public void goToScene(ScreenType screenType)
     {
         clear();
-        if (ScreenType.GAME.equals(screenType))
+        if (screenType == ScreenType.CONTINUE)
         {
-            screens.get(screenType).createView(true);
+            ((GameScreenController)screens.get(screenType)).continueGame();
+            return;
         }
-        else
-        {
-            screens.get(screenType).createView();
-        }
+
+        screens.get(screenType).createView();
     }
 
     public void init(Composite composite)

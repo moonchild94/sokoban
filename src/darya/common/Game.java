@@ -7,9 +7,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import src.darya.controller.GameController;
+import src.darya.controller.ScreenSwitchController;
 import src.darya.controller.ScreenType;
 
+/**
+ * Главный класс, с которого начинается игра.
+ * @author Калмыкова Д.В.
+ * @sinse 4 февр. 2016 г.
+ */
 public class Game
 {
     public static void main(String args[])
@@ -38,15 +43,18 @@ public class Game
     {
         Composite composite = new Composite(shell, SWT.NONE);
         shell.setText("Sokoban");
-        Image background = new Image(display, Constants.DIRECTORY_PREFIX + "/sokobanBackground.jpg");
-        composite.setBackgroundImage(background);
-        Image icon = new Image(display, Constants.DIRECTORY_PREFIX + "/boxImage.jpg");
+
+        Image background = new Image(display, Constants.DIRECTORY_COMMON_PREFIX + "/sokobanBackground.jpg");
+        Image icon = new Image(display, Constants.DIRECTORY_GAME_OBJECTS_PREFIX + "/boxImage.jpg");
+
         shell.setImage(icon);
         shell.setSize(800, 600);
         shell.setLayout(new FillLayout());
+
+        composite.setBackgroundImage(background);
         composite.setSize(800, 600);
 
-        GameController gameController = GameController.getInstance();
+        ScreenSwitchController gameController = ScreenSwitchController.getInstance();
         gameController.init(composite);
         gameController.goToScene(ScreenType.MENU);
     }

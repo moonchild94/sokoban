@@ -7,6 +7,11 @@ import org.eclipse.swt.widgets.Composite;
 
 import src.darya.common.Constants;
 
+/**
+ * Представление редактора карт.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public class MapEditorView implements View
 {
     private Composite composite;
@@ -40,14 +45,14 @@ public class MapEditorView implements View
     {
         helpButton = new Button(composite, SWT.PUSH);
         helpButton.setBounds(110, 0, 35, 35);
-        Image helpButtonImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/question.png");
+        Image helpButtonImage = new Image(composite.getDisplay(), Constants.DIRECTORY_COMMON_PREFIX + "/question.png");
         helpButton.setImage(helpButtonImage);
     }
 
     private void addSaveButton(Composite composite)
     {
         saveButton = new Button(composite, SWT.BORDER);
-        Image saveImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/saveImage.jpg");
+        Image saveImage = new Image(composite.getDisplay(), Constants.DIRECTORY_COMMON_PREFIX + "/saveImage.jpg");
         saveButton.setImage(saveImage);
         saveButton.setBounds(0, 0, 98, 35);
     }

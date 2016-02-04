@@ -2,11 +2,15 @@ package src.darya.model;
 
 import src.darya.common.Constants;
 
+/**
+ * Абстрактный класс моделей способных перемещаться.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public abstract class MovableObject extends CollisionObject
 {
     public MovableObject()
     {
-
     }
 
     public MovableObject(int x, int y)

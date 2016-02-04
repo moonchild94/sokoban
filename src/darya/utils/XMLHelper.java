@@ -7,6 +7,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+/**
+ * Утилитарный класс работы с xml.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public class XMLHelper
 {
     public static Object unwrapFromXML(File file, Class<?> clazz)

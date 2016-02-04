@@ -11,6 +11,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+/**
+ * Класс для работы с музыкой в игре.
+ * @author Калмыкова Д.В.
+ * @sinse 4 февр. 2016 г.
+ */
 public class GameMusic
 {
     private static MediaPlayer mediaPlayer;
@@ -21,7 +26,7 @@ public class GameMusic
         FXCanvas canvas = new FXCanvas(shell, SWT.NONE);
         Scene scene = new Scene(new BorderPane());
         canvas.setScene(scene);
-        File audioFile = new File(Constants.DIRECTORY_PREFIX + "/soundtrack.mp3");
+        File audioFile = new File(Constants.DIRECTORY_COMMON_PREFIX + "/soundtrack.mp3");
         Media hit = new Media(audioFile.getAbsoluteFile().toURI().toString());
         mediaPlayer = new MediaPlayer(hit);
         mediaPlayer.setCycleCount(Integer.MAX_VALUE);

@@ -7,6 +7,11 @@ import org.eclipse.swt.widgets.Composite;
 
 import src.darya.common.Constants;
 
+/**
+ * Представление игрового объекта размером с ячейку игрового поля.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public abstract class SimpleView implements View
 {
     private Composite smallComposite;

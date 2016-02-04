@@ -4,6 +4,11 @@ import org.eclipse.swt.widgets.Composite;
 
 import src.darya.view.PlayerView;
 
+/**
+ * Контроллер игрока на карте.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public class PlayerController extends SimpleController
 {
     public PlayerController(Composite composite)
@@ -13,7 +18,7 @@ public class PlayerController extends SimpleController
     }
 
     @Override
-    protected void createView(boolean... params)
+    protected void createView()
     {
         setView(new PlayerView(getComposite()));
     }

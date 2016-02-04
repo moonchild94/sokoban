@@ -13,6 +13,11 @@ import src.darya.model.Home;
 import src.darya.model.Player;
 import src.darya.model.Wall;
 
+/**
+ * Фабрика контроллеров игровых объектов.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public class SimpleControllerFactory
 {
     private static Map<Class<? extends GameObject>, Class<? extends SimpleController>> simpleControllerMap;
@@ -42,7 +47,6 @@ public class SimpleControllerFactory
                 {
                     e.printStackTrace();
                 }
-
             }
         }
 

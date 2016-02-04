@@ -25,6 +25,11 @@ import src.darya.view.Cell;
 import src.darya.view.MapEditorView;
 import src.darya.view.TypeContent;
 
+/**
+ * Контроллер редактора карт
+ * @author Калмыкова Д.В.
+ * @sinse 4 февр. 2016 г.
+ */
 public class MapEditorScreenController extends AbstractController
 {
     private KeyListener keyListener;
@@ -35,7 +40,7 @@ public class MapEditorScreenController extends AbstractController
     }
 
     @Override
-    protected void createView(boolean... params)
+    protected void createView()
     {
         MapEditorView mapEditorView = new MapEditorView(getComposite());
         setView(mapEditorView);
@@ -56,10 +61,10 @@ public class MapEditorScreenController extends AbstractController
                 //@formatter:off
                                             "Help:\n"
                                             + "1. Add wall - One click\n"
-                                            + "2. Add box - Two click\n"
-                                            + "3. Add home - Three click\n"
-                                            + "4. Add player - Four click\n"
-                                            + "5. Clear cell - Five click\n"
+                                            + "2. Add box - Two clicks\n"
+                                            + "3. Add home - Three clicks\n"
+                                            + "4. Add player - Four clicks\n"
+                                            + "5. Clear cell - Five clicks\n"
                                             + "6. Menu - ESC";
                //@formatter:on
 
@@ -80,14 +85,13 @@ public class MapEditorScreenController extends AbstractController
                 if (arg0.keyCode == SWT.ESC)
                 {
                     removeListeners();
-                    GameController.getInstance().goToScene(ScreenType.MENU);
+                    ScreenSwitchController.getInstance().goToScene(ScreenType.MENU);
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent arg0)
             {
-
             }
         };
 
@@ -107,13 +111,13 @@ public class MapEditorScreenController extends AbstractController
 
                 if (isConfigurationCorrect(gameObjects))
                 {
-                    GameController gameController = GameController.getInstance();
+                    ScreenSwitchController gameController = ScreenSwitchController.getInstance();
                     GameScreenController gameScreenController = (GameScreenController)gameController
                             .getController(ScreenType.GAME);
                     int maxLevel = gameScreenController.incrementMaxLevel();
 
                     String pattern = "/level%d.xml";
-                    File savePath = new File(Constants.DIRECTORY_PREFIX + String.format(pattern, maxLevel));
+                    File savePath = new File(Constants.DIRECTORY_LEVELS_PREFIX + String.format(pattern, maxLevel));
                     XMLHelper.wrapToXML(savePath, gameObjects);
 
                     clear();

@@ -1,7 +1,6 @@
 package src.darya.controller;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,17 +17,16 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import com.google.common.collect.Maps;
 
-import src.darya.model.Box;
-import src.darya.model.CollisionObject;
 import src.darya.model.Direction;
 import src.darya.model.GameObject;
-import src.darya.model.Home;
 import src.darya.model.LevelData;
-import src.darya.model.MovableObject;
-import src.darya.model.Player;
-import src.darya.model.Wall;
 import src.darya.view.GameView;
 
+/**
+ * Контроллер игрового экрана. 
+ * @author Калмыкова Д.В.
+ * @sinse 4 февр. 2016 г.
+ */
 public class GameScreenController extends AbstractController
 {
     private class GameKeyListener implements KeyListener
@@ -39,24 +37,23 @@ public class GameScreenController extends AbstractController
             switch (arg0.keyCode)
             {
             case SWT.ARROW_LEFT:
-                move(Direction.LEFT);
+                levelLogic.move(Direction.LEFT);
                 break;
             case SWT.ARROW_UP:
-                move(Direction.UP);
+                levelLogic.move(Direction.UP);
                 break;
             case SWT.ARROW_RIGHT:
-                move(Direction.RIGHT);
+                levelLogic.move(Direction.RIGHT);
                 break;
             case SWT.ARROW_DOWN:
-                move(Direction.DOWN);
+                levelLogic.move(Direction.DOWN);
                 break;
             case SWT.F5:
-                update();
+                restartLevel();
                 break;
             case SWT.ESC:
                 timerTask.cancel();
-                removeListeners();
-                GameController.getInstance().goToScene(ScreenType.MENU);
+                goToMenu();
                 break;
             }
         }
@@ -64,7 +61,6 @@ public class GameScreenController extends AbstractController
         @Override
         public void keyReleased(KeyEvent arg0)
         {
-
         }
     }
 
@@ -83,14 +79,16 @@ public class GameScreenController extends AbstractController
                 @Override
                 public void run()
                 {
-                    timerLabel.setText(String.valueOf(++levelTime));
+                    levelTime++;
+                    timerLabel.setText(String.valueOf(levelTime));
                 }
             });
         }
     }
 
+    private GameLevelLogic levelLogic;
     private LevelData levelData;
-    private Map<GameObject, SimpleController> simpleControllers = Maps.newHashMap();
+    private Map<GameObject, SimpleController> levelObjectsControllers = Maps.newHashMap();
 
     private TimerTask timerTask;
     private Label levelLabel, timerLabel;
@@ -102,11 +100,49 @@ public class GameScreenController extends AbstractController
     {
         super(composite);
         levelData = new LevelData();
+        levelLogic = new GameLevelLogic(this, levelData);
     }
 
-    public int getMaxLevel()
+    public void clear()
     {
-        return levelData.getMaxLevel();
+        for (Map.Entry<GameObject, SimpleController> pair : levelObjectsControllers.entrySet())
+        {
+            pair.getValue().getView().getComposite().dispose();
+        }
+
+        levelObjectsControllers.clear();
+        timerLabel.dispose();
+    }
+
+    public void continueGame()
+    {
+        drawLevel();
+    }
+
+    public long getLevelTime()
+    {
+        return levelTime;
+    }
+
+    public SimpleController getObjectController(GameObject gameObject)
+    {
+        return levelObjectsControllers.get(gameObject);
+    }
+
+    public TimerTask getTimerTask()
+    {
+        return timerTask;
+    }
+
+    public long getTotalTime()
+    {
+        return totalTime;
+    }
+
+    public void goToMenu()
+    {
+        getComposite().removeKeyListener(keyListener);
+        ScreenSwitchController.getInstance().goToScene(ScreenType.MENU);
     }
 
     public int incrementMaxLevel()
@@ -114,29 +150,63 @@ public class GameScreenController extends AbstractController
         return levelData.incrementMaxLevel();
     }
 
-    public void setLevel(int level)
+    public void setLevelTime(long levelTime)
     {
-        levelData.startLevel(level);
-        levelTime = 0;
+        this.levelTime = levelTime;
+    }
+
+    public void setTotalTime(long totalTime)
+    {
+        this.totalTime = totalTime;
+    }
+
+    public void showMessage(String message)
+    {
+        MessageBox messageBox = new MessageBox(getComposite().getShell());
+        messageBox.setMessage(message);
+        messageBox.open();
+    }
+
+    protected void createGameObjectsViews()
+    {
+        for (GameObject gameObject : levelData.getGameObjects().getAll())
+        {
+            SimpleController simpleController = SimpleControllerFactory.getSimpleViewController(gameObject.getClass(),
+                    getComposite().getDisplay(), getComposite());
+            if (simpleController != null)
+            {
+                simpleController.getView().setCoordinates(gameObject.getX(), gameObject.getY());
+                levelObjectsControllers.put(gameObject, simpleController);
+            }
+        }
+    }
+
+    protected void createTimer()
+    {
+        Timer timer = new Timer();
+        timerTask = new StopwatchTask();
+        timer.schedule(timerTask, 1, 1000);
     }
 
     @Override
-    protected void createView(boolean... isNewGame)
+    protected void createView()
     {
-        GameController.getInstance().setGameStarted(true);
+        ScreenSwitchController.getInstance().setGameStarted(true);
+        setLevel(1);
+        setTotalTime(0);
+        drawLevel();
+    }
 
-        if (isNewGame.length == 1 && isNewGame[0])
-        {
-            setLevel(1);
-            totalTime = 0;
-        }
+    protected void updateLevelLabel()
+    {
+        String currentLevel = String.valueOf(levelData.getCurrentLevel());
+        levelLabel.setText(currentLevel + " level");
+    }
 
-        setView(new GameView(getComposite()));
-        createSimpleViews();
-        addListeners();
-        createTimer();
-        initLevelLabel();
-        checkCompletion(true);
+    private void addGameKeyListener()
+    {
+        keyListener = new GameKeyListener();
+        getComposite().addKeyListener(keyListener);
     }
 
     private void addHelpButtonListener()
@@ -147,10 +217,10 @@ public class GameScreenController extends AbstractController
             @Override
             public void handleEvent(Event arg0)
             {
-                String message =
                 //@formatter:off
+                String message =
                                     "Help:\n"
-                                    + "1. Restart - F5\n"
+                                    + "1. Restart level - F5\n"
                                     + "2. Menu - ESC\n"
                                     + "3. Up - Arrow up\n"
                                     + "4. Down - Arrow down\n"
@@ -167,164 +237,17 @@ public class GameScreenController extends AbstractController
     private void addListeners()
     {
         addHelpButtonListener();
-        keyListener = new GameKeyListener();
-        getComposite().addKeyListener(keyListener);
+        addGameKeyListener();
     }
 
-    private boolean checkBoxCollision(Direction direction)
+    private void drawLevel()
     {
-        Player player = levelData.getGameObjects().getPlayer();
-        Set<Box> boxes = levelData.getGameObjects().getBoxes();
-        boolean hasCollision = false;
-        Box collisionBox = null;
-        for (Box box : boxes)
-        {
-            if (player.isCollision(box, direction))
-            {
-                collisionBox = box;
-                break;
-            }
-        }
-
-        if (collisionBox != null)
-        {
-            for (Box box : boxes)
-            {
-                if (collisionBox.isCollision(box, direction))
-                {
-                    hasCollision = true;
-                    break;
-                }
-            }
-
-            hasCollision |= checkWallCollision(collisionBox, direction);
-
-            if (!hasCollision)
-            {
-                moveGameObject(collisionBox, direction);
-            }
-        }
-
-        return hasCollision;
-    }
-
-    private void checkCompletion(boolean isContinue)
-    {
-        Set<Box> boxes = levelData.getGameObjects().getBoxes();
-        Set<Home> homes = levelData.getGameObjects().getHomes();
-        boolean wasCompleted = true;
-
-        if (boxes.size() != homes.size())
-        {
-            return;
-        }
-
-        for (Box box : boxes)
-        {
-            boolean isCurrentBoxInHome = false;
-
-            for (Home home : homes)
-            {
-                if (box.getX() == home.getX() && box.getY() == home.getY())
-                {
-                    isCurrentBoxInHome = true;
-                    break;
-                }
-            }
-
-            wasCompleted &= isCurrentBoxInHome;
-        }
-
-        if (wasCompleted)
-        {
-            completed(isContinue);
-        }
-    }
-
-    private boolean checkWallCollision(CollisionObject gameObject, Direction direction)
-    {
-        Set<Wall> walls = levelData.getGameObjects().getWalls();
-        for (Wall wall : walls)
-        {
-            if (gameObject.isCollision(wall, direction))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void clear()
-    {
-        for (Map.Entry<GameObject, SimpleController> pair : simpleControllers.entrySet())
-        {
-            pair.getValue().getView().getComposite().dispose();
-        }
-
-        simpleControllers.clear();
-
-        timerLabel.dispose();
-    }
-
-    private void completed(boolean isContinue)
-    {
-        timerTask.cancel();
-        if (isLastDefaultLevel())
-        {
-            if (!isContinue)
-            {
-                totalTime += levelTime;
-            }
-            String message = "Congratulations! All default levels completed!\n" + " You needed " + totalTime
-                    + " sec to do it.";
-            showMessage(message);
-        }
-
-        if (isLastLevel())
-        {
-            if (!isLastDefaultLevel())
-            {
-                String message = "Congratulations! An additional level completed!";
-                showMessage(message);
-            }
-
-            showMessage("Use map editor to play more level");
-
-            removeListeners();
-            GameController.getInstance().goToScene(ScreenType.MENU);
-        }
-        else
-        {
-            showMessage("Level completed!");
-            clear();
-            levelData.startNextLevel();
-            totalTime += levelTime;
-            levelTime = 0;
-            updateLevelLabel();
-            createTimer();
-            createSimpleViews();
-        }
-    }
-
-    private void createSimpleViews()
-    {
-        for (GameObject gameObject : levelData.getGameObjects().getAll())
-        {
-            SimpleController simpleController = SimpleControllerFactory.getSimpleViewController(gameObject.getClass(),
-                    getComposite().getDisplay(), getComposite());
-            if (simpleController != null)
-            {
-                simpleController.getView().setCoordinates(gameObject.getX(), gameObject.getY());
-                simpleControllers.put(gameObject, simpleController);
-            }
-        }
-    }
-
-    private void createTimer()
-    {
-        Timer timer = new Timer();
-        timerTask = new StopwatchTask();
-        timer.schedule(timerTask, 1, 1000);
+        setView(new GameView(getComposite()));
+        createGameObjectsViews();
+        addListeners();
+        createTimer();
+        initLevelLabel();
+        levelLogic.checkCompletion(true);
     }
 
     private void initLevelLabel()
@@ -333,66 +256,18 @@ public class GameScreenController extends AbstractController
         updateLevelLabel();
     }
 
-    private boolean isLastDefaultLevel()
-    {
-        return levelData.getCurrentLevel() == levelData.getMaxDefaultLevel();
-    }
-
-    private boolean isLastLevel()
-    {
-        return levelData.getCurrentLevel() == levelData.getMaxLevel();
-    }
-
-    private void move(Direction direction)
-    {
-        Player player = levelData.getGameObjects().getPlayer();
-
-        if (checkWallCollision(player, direction))
-        {
-            return;
-        }
-
-        if (checkBoxCollision(direction))
-        {
-            return;
-        }
-
-        moveGameObject(player, direction);
-
-        checkCompletion(false);
-    }
-
-    private void moveGameObject(MovableObject movableObject, Direction direction)
-    {
-        movableObject.move(direction);
-        SimpleController simpleController = simpleControllers.get(movableObject);
-        simpleController.getView().setCoordinates(movableObject.getX(), movableObject.getY());
-    }
-
-    private void removeListeners()
-    {
-        getComposite().removeKeyListener(keyListener);
-    }
-
-    private void showMessage(String message)
-    {
-        MessageBox messageBox = new MessageBox(getComposite().getShell());
-        messageBox.setMessage(message);
-        messageBox.open();
-    }
-
-    private void update()
+    private void restartLevel()
     {
         timerTask.cancel();
         clear();
         setLevel(levelData.getCurrentLevel());
         createTimer();
-        createSimpleViews();
+        createGameObjectsViews();
     }
 
-    private void updateLevelLabel()
+    private void setLevel(int level)
     {
-        String currentLevel = String.valueOf(levelData.getCurrentLevel());
-        levelLabel.setText(currentLevel + " level");
+        levelData.startLevel(level);
+        levelTime = 0;
     }
 }

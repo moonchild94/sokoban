@@ -4,6 +4,11 @@ import org.eclipse.swt.widgets.Composite;
 
 import src.darya.view.SimpleView;
 
+/**
+ * Абстрактный класс контроллера, содержащего отображение.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public abstract class SimpleController extends AbstractController
 {
     protected SimpleView view;

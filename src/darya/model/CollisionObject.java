@@ -2,11 +2,16 @@ package src.darya.model;
 
 import src.darya.common.Constants;
 
+/**
+ * Абстрактный класс для объектов взаимодействующих с
+ * другими игровыми объектами.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public abstract class CollisionObject extends GameObject
 {
     public CollisionObject()
     {
-
     }
 
     public CollisionObject(int x, int y)

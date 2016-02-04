@@ -5,13 +5,18 @@ import java.io.FileFilter;
 
 import src.darya.common.Constants;
 
+/**
+ * Утилитарный класс, содержащий данные об игровых уровнях.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public class LevelData
 {
     private int currentLevel = 1;
     private int maxLevel;
     private LevelLoader levelLoader = new LevelLoader();
     private GameObjects gameObjects;
-    private int maxDefaultLevel = 5;
+    private int maxDefaultLevel = 2;
 
     public LevelData()
     {
@@ -57,7 +62,7 @@ public class LevelData
 
     private int calculateMaxLevel()
     {
-        File resourcesDirectory = new File(Constants.DIRECTORY_PREFIX);
+        File resourcesDirectory = new File(Constants.DIRECTORY_LEVELS_PREFIX);
 
         FileFilter levelFileFilter = new FileFilter()
         {

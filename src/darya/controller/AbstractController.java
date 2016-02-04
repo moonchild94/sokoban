@@ -4,6 +4,12 @@ import org.eclipse.swt.widgets.Composite;
 
 import src.darya.view.View;
 
+/**
+ * Абстрактный класс, содержащий базовую логику работы
+ * контроллеров в игре.
+ * @author Калмыкова Д.В.
+ * @sinse 4 февр. 2016 г.
+ */
 public abstract class AbstractController implements IController
 {
     private Composite composite;
@@ -29,5 +35,5 @@ public abstract class AbstractController implements IController
         this.view = view;
     }
 
-    protected abstract void createView(boolean... params);
+    protected abstract void createView();
 }

@@ -11,6 +11,11 @@ import org.eclipse.swt.widgets.Label;
 
 import src.darya.common.Constants;
 
+/**
+ * Представление игрового экрана.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public class GameView implements View
 {
     private Composite composite;
@@ -54,7 +59,7 @@ public class GameView implements View
     {
         helpButton = new Button(composite, SWT.PUSH);
         helpButton.setBounds(220, 5, 35, 35);
-        Image helpButtonImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/question.png");
+        Image helpButtonImage = new Image(composite.getDisplay(), Constants.DIRECTORY_COMMON_PREFIX + "/question.png");
         helpButton.setImage(helpButtonImage);
 
         levelLabel = new Label(composite, SWT.NONE);

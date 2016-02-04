@@ -1,12 +1,16 @@
 package src.darya.model;
 
+/**
+ * Модель игрового объекта на уровне.
+ * @author Калмыкова Д.В.
+ * @sinse 5 февр. 2016 г.
+ */
 public abstract class GameObject
 {
     private int x, y;
 
     public GameObject()
     {
-
     }
 
     public GameObject(int x, int y)
