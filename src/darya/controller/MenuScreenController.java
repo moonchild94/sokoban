@@ -5,7 +5,6 @@ import java.util.Map;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
@@ -14,15 +13,15 @@ import src.darya.view.MenuView;
 
 public class MenuScreenController extends AbstractController
 {
-    public MenuScreenController(Display display, Composite composite)
+    public MenuScreenController(Composite composite)
     {
-        super(display, composite);
+        super(composite);
     }
 
     @Override
     protected void createView(boolean... params)
     {
-        MenuView menu = new MenuView(getDisplay(), getComposite());
+        MenuView menu = new MenuView(getComposite());
         setView(menu);
         Map<MenuElement, Button> buttons = menu.getButtons();
 

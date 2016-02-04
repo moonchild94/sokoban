@@ -7,7 +7,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 import src.darya.common.GameMusic;
 import src.darya.view.OptionsView;
@@ -16,9 +15,9 @@ public class OptionsScreenController extends AbstractController
 {
     private KeyListener keyListener;
 
-    public OptionsScreenController(Display display, Composite composite)
+    public OptionsScreenController(Composite composite)
     {
-        super(display, composite);
+        super(composite);
     }
 
     @Override

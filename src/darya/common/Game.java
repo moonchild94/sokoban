@@ -16,20 +16,7 @@ public class Game
     {
         Display display = Display.getDefault();
         Shell shell = new Shell(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
-
-        Composite composite = new Composite(shell, SWT.NONE);
-        shell.setText("Sokoban");
-        Image background = new Image(display, "./resources/sokobanBackground.jpg");
-        composite.setBackgroundImage(background);
-        Image icon = new Image(display, "./resources/boxImage.jpg");
-        shell.setImage(icon);
-        shell.setSize(800, 600);
-        shell.setLayout(new FillLayout());
-        composite.setSize(800, 600);
-
-        GameController gameController = GameController.getInstance();
-        gameController.init(display, composite);
-        gameController.goToScene(ScreenType.MENU);
+        init(display, shell);
 
         shell.open();
 
@@ -45,5 +32,22 @@ public class Game
         }
 
         display.dispose();
+    }
+
+    private static void init(Display display, Shell shell)
+    {
+        Composite composite = new Composite(shell, SWT.NONE);
+        shell.setText("Sokoban");
+        Image background = new Image(display, Constants.DIRECTORY_PREFIX + "/sokobanBackground.jpg");
+        composite.setBackgroundImage(background);
+        Image icon = new Image(display, Constants.DIRECTORY_PREFIX + "/boxImage.jpg");
+        shell.setImage(icon);
+        shell.setSize(800, 600);
+        shell.setLayout(new FillLayout());
+        composite.setSize(800, 600);
+
+        GameController gameController = GameController.getInstance();
+        gameController.init(composite);
+        gameController.goToScene(ScreenType.MENU);
     }
 }

@@ -8,7 +8,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
@@ -30,15 +29,15 @@ public class MapEditorScreenController extends AbstractController
 {
     private KeyListener keyListener;
 
-    public MapEditorScreenController(Display display, Composite composite)
+    public MapEditorScreenController(Composite composite)
     {
-        super(display, composite);
+        super(composite);
     }
 
     @Override
     protected void createView(boolean... params)
     {
-        MapEditorView mapEditorView = new MapEditorView(getDisplay(), getComposite());
+        MapEditorView mapEditorView = new MapEditorView(getComposite());
         setView(mapEditorView);
         addSaveListener(mapEditorView);
         addHelpListener(mapEditorView);

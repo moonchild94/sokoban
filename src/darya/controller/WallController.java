@@ -1,21 +1,20 @@
 package src.darya.controller;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 import src.darya.view.WallView;
 
 public class WallController extends SimpleController
 {
-    public WallController(Display display, Composite composite)
+    public WallController(Composite composite)
     {
-        super(display, composite);
+        super(composite);
         createView();
     }
 
     @Override
     protected void createView(boolean... params)
     {
-        setView(new WallView(getDisplay(), getComposite()));
+        setView(new WallView(getComposite()));
     }
 }

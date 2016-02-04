@@ -1,7 +1,6 @@
 package src.darya.controller;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 import src.darya.view.SimpleView;
 
@@ -9,9 +8,9 @@ public abstract class SimpleController extends AbstractController
 {
     protected SimpleView view;
 
-    public SimpleController(Display display, Composite composite)
+    public SimpleController(Composite composite)
     {
-        super(display, composite);
+        super(composite);
     }
 
     @Override

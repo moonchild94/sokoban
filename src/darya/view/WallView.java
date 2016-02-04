@@ -1,13 +1,12 @@
 package src.darya.view;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 public class WallView extends SimpleView
 {
-    public WallView(Display display, Composite composite)
+    public WallView(Composite composite)
     {
-        super(display, composite);
+        super(composite);
     }
 
     @Override

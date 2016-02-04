@@ -1,13 +1,12 @@
 package src.darya.view;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 public class BoxView extends SimpleView
 {
-    public BoxView(Display display, Composite composite)
+    public BoxView(Composite composite)
     {
-        super(display, composite);
+        super(composite);
     }
 
     @Override

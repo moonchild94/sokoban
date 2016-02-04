@@ -1,13 +1,12 @@
 package src.darya.view;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 public class PlayerView extends SimpleView
 {
-    public PlayerView(Display display, Composite composite)
+    public PlayerView(Composite composite)
     {
-        super(display, composite);
+        super(composite);
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 
 import com.google.common.collect.Maps;
 
@@ -22,11 +21,7 @@ public class GameController implements IController
     }
 
     private boolean isGameStarted = false;
-
-    private Display display;
-
     private Composite composite;
-
     private Map<ScreenType, AbstractController> screens = Maps.newHashMap();
 
     private GameController()
@@ -36,7 +31,7 @@ public class GameController implements IController
 
     public void exit()
     {
-        display.dispose();
+        composite.getDisplay().dispose();
         System.exit(0);
     }
 
@@ -58,16 +53,15 @@ public class GameController implements IController
         }
     }
 
-    public void init(Display display, Composite composite)
+    public void init(Composite composite)
     {
-        this.display = display;
         this.composite = composite;
 
-        screens.put(ScreenType.MENU, new MenuScreenController(display, composite));
-        screens.put(ScreenType.GAME, new GameScreenController(display, composite));
+        screens.put(ScreenType.MENU, new MenuScreenController(composite));
+        screens.put(ScreenType.GAME, new GameScreenController(composite));
         screens.put(ScreenType.CONTINUE, screens.get(ScreenType.GAME));
-        screens.put(ScreenType.OPTIONS, new OptionsScreenController(display, composite));
-        screens.put(ScreenType.MAP_EDITOR, new MapEditorScreenController(display, composite));
+        screens.put(ScreenType.OPTIONS, new OptionsScreenController(composite));
+        screens.put(ScreenType.MAP_EDITOR, new MapEditorScreenController(composite));
     }
 
     public boolean isGameStarted()

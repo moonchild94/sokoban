@@ -36,8 +36,7 @@ public class SimpleControllerFactory
             {
                 try
                 {
-                    return pair.getValue().getConstructor(Display.class, Composite.class).newInstance(display,
-                            composite);
+                    return pair.getValue().getConstructor(Composite.class).newInstance(composite);
                 }
                 catch (Exception e)
                 {

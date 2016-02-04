@@ -76,9 +76,9 @@ public class GameScreenController extends AbstractController
         {
             timerLabel = new Label(getComposite(), SWT.NONE);
             timerLabel.setBounds(5, 5, 100, 35);
-            timerLabel.setFont(new Font(getDisplay(), "Arial", 20, SWT.NONE));
-            timerLabel.setBackground(new Color(getDisplay(), new RGB(0, 0, 0), 0));
-            timerLabel.setForeground(new Color(getDisplay(), new RGB(255, 255, 255)));
+            timerLabel.setFont(new Font(getComposite().getDisplay(), "Arial", 20, SWT.NONE));
+            timerLabel.setBackground(new Color(getComposite().getDisplay(), new RGB(0, 0, 0), 0));
+            timerLabel.setForeground(new Color(getComposite().getDisplay(), new RGB(255, 255, 255)));
             timerLabel.setText(String.valueOf(levelTime));
         }
 
@@ -105,9 +105,9 @@ public class GameScreenController extends AbstractController
     private long levelTime = 0;
     private long totalTime = 0;
 
-    public GameScreenController(Display display, Composite composite)
+    public GameScreenController(Composite composite)
     {
-        super(display, composite);
+        super(composite);
         levelData = new LevelData();
     }
 
@@ -150,7 +150,7 @@ public class GameScreenController extends AbstractController
     {
         Button helpButton = new Button(getComposite(), SWT.PUSH);
         helpButton.setBounds(220, 5, 35, 35);
-        Image helpButtonImage = new Image(getDisplay(), "./resources/question.png");
+        Image helpButtonImage = new Image(getComposite().getDisplay(), "./resources/question.png");
         helpButton.setImage(helpButtonImage);
         helpButton.addListener(SWT.MouseDown, new Listener()
         {
@@ -320,7 +320,7 @@ public class GameScreenController extends AbstractController
         for (GameObject gameObject : levelData.getGameObjects().getAll())
         {
             SimpleController simpleController = SimpleControllerFactory.getSimpleViewController(gameObject.getClass(),
-                    getDisplay(), getComposite());
+                    getComposite().getDisplay(), getComposite());
             if (simpleController != null)
             {
                 simpleController.getView().setCoordinates(gameObject.getX(), gameObject.getY());
@@ -340,9 +340,9 @@ public class GameScreenController extends AbstractController
     {
         levelLabel = new Label(getComposite(), SWT.NONE);
         levelLabel.setBounds(110, 5, 100, 35);
-        levelLabel.setFont(new Font(getDisplay(), "Arial", 20, SWT.NONE));
-        levelLabel.setBackground(new Color(getDisplay(), new RGB(0, 0, 0), 0));
-        levelLabel.setForeground(new Color(getDisplay(), new RGB(255, 255, 255)));
+        levelLabel.setFont(new Font(getComposite().getDisplay(), "Arial", 20, SWT.NONE));
+        levelLabel.setBackground(new Color(getComposite().getDisplay(), new RGB(0, 0, 0), 0));
+        levelLabel.setForeground(new Color(getComposite().getDisplay(), new RGB(255, 255, 255)));
         updateLevelLabel();
 
     }

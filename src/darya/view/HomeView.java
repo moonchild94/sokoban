@@ -1,13 +1,12 @@
 package src.darya.view;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 public class HomeView extends SimpleView
 {
-    public HomeView(Display display, Composite composite)
+    public HomeView(Composite composite)
     {
-        super(display, composite);
+        super(composite);
     }
 
     @Override
