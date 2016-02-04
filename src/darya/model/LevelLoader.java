@@ -2,7 +2,7 @@ package src.darya.model;
 
 import java.io.File;
 
-import src.darya.levelBuilder.XMLHelper;
+import src.darya.utils.XMLHelper;
 
 public class LevelLoader
 {

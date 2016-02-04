@@ -16,15 +16,15 @@ import org.eclipse.swt.widgets.MessageBox;
 import com.google.common.collect.Sets;
 
 import src.darya.common.Constants;
-import src.darya.levelBuilder.TypeContent;
-import src.darya.levelBuilder.XMLHelper;
 import src.darya.model.Box;
 import src.darya.model.GameObjects;
 import src.darya.model.Home;
 import src.darya.model.Player;
 import src.darya.model.Wall;
+import src.darya.utils.XMLHelper;
 import src.darya.view.Cell;
 import src.darya.view.MapEditorView;
+import src.darya.view.TypeContent;
 
 public class MapEditorScreenController extends AbstractController
 {

@@ -103,6 +103,7 @@ public class GameScreenController extends AbstractController
     private Label levelLabel, timerLabel;
     private KeyListener keyListener;
     private long levelTime = 0;
+    private long totalTime = 0;
 
     public GameScreenController(Display display, Composite composite)
     {
@@ -129,9 +130,12 @@ public class GameScreenController extends AbstractController
     @Override
     protected void createView(boolean... isNewGame)
     {
+        GameController.getInstance().setGameStarted(true);
+
         if (isNewGame.length == 1 && isNewGame[0])
         {
             setLevel(1);
+            totalTime = 0;
         }
 
         addHelpButton();
@@ -139,7 +143,7 @@ public class GameScreenController extends AbstractController
         addListeners();
         createTimer();
         initLevelLabel();
-        checkCompletion();
+        checkCompletion(true);
     }
 
     private void addHelpButton()
@@ -213,7 +217,7 @@ public class GameScreenController extends AbstractController
         return hasCollision;
     }
 
-    private void checkCompletion()
+    private void checkCompletion(boolean isContinue)
     {
         Set<Box> boxes = levelData.getGameObjects().getBoxes();
         Set<Home> homes = levelData.getGameObjects().getHomes();
@@ -242,7 +246,7 @@ public class GameScreenController extends AbstractController
 
         if (wasCompleted)
         {
-            completed();
+            completed(isContinue);
         }
     }
 
@@ -271,13 +275,28 @@ public class GameScreenController extends AbstractController
         timerLabel.dispose();
     }
 
-    private void completed()
+    private void completed(boolean isContinue)
     {
         timerTask.cancel();
+        if (isLastDefaultLevel())
+        {
+            if (!isContinue)
+            {
+                totalTime += levelTime;
+            }
+            String message = "Congratulations! All default levels completed!\n" + " You needed " + totalTime
+                    + " sec to do it.";
+            showMessage(message);
+        }
+
         if (isLastLevel())
         {
-            String message = isLastDefaultLevel() ? "Congratulations! You won!" : "An additional level completed!";
-            showMessage(message);
+            if (!isLastDefaultLevel())
+            {
+                String message = "Congratulations! An additional level completed!";
+                showMessage(message);
+            }
+
             showMessage("Use map editor to play more level");
 
             removeListeners();
@@ -288,6 +307,7 @@ public class GameScreenController extends AbstractController
             showMessage("Level completed!");
             clear();
             levelData.startNextLevel();
+            totalTime += levelTime;
             levelTime = 0;
             updateLevelLabel();
             createTimer();
@@ -353,7 +373,7 @@ public class GameScreenController extends AbstractController
 
         moveGameObject(player, direction);
 
-        checkCompletion();
+        checkCompletion(false);
     }
 
     private void moveGameObject(MovableObject movableObject, Direction direction)

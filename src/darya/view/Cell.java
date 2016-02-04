@@ -7,7 +7,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
 import src.darya.common.Constants;
-import src.darya.levelBuilder.TypeContent;
 
 public class Cell extends Composite
 {

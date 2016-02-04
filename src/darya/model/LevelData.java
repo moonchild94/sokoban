@@ -11,7 +11,7 @@ public class LevelData
     private int maxLevel;
     private LevelLoader levelLoader = new LevelLoader();
     private GameObjects gameObjects;
-    private int maxDefaultLevel = 1;
+    private int maxDefaultLevel = 2;
 
     public LevelData()
     {

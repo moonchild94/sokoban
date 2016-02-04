@@ -14,8 +14,6 @@ import src.darya.view.MenuView;
 
 public class MenuScreenController extends AbstractController
 {
-    private boolean isFirst = true;
-
     public MenuScreenController(Display display, Composite composite)
     {
         super(display, composite);
@@ -28,12 +26,6 @@ public class MenuScreenController extends AbstractController
         setView(menu);
         Map<MenuElement, Button> buttons = menu.getButtons();
 
-        if (isFirst)
-        {
-            buttons.get(MenuElement.CONTINUE).setEnabled(false);
-        }
-        isFirst = false;
-
         buttons.get(MenuElement.NEW_GAME).addListener(SWT.MouseDown, new Listener()
         {
             @Override
@@ -43,21 +35,24 @@ public class MenuScreenController extends AbstractController
             }
         });
 
-        buttons.get(MenuElement.CONTINUE).addListener(SWT.MouseDown, new Listener()
+        if (GameController.getInstance().isGameStarted())
         {
-            @Override
-            public void handleEvent(Event arg0)
+            buttons.get(MenuElement.CONTINUE).addListener(SWT.MouseDown, new Listener()
             {
-                GameController.getInstance().goToScene(ScreenType.CONTINUE);
-            }
-        });
+                @Override
+                public void handleEvent(Event arg0)
+                {
+                    GameController.getInstance().goToScene(ScreenType.CONTINUE);
+                }
+            });
+        }
 
-        buttons.get(MenuElement.RATING).addListener(SWT.MouseDown, new Listener()
+        buttons.get(MenuElement.OPTIONS).addListener(SWT.MouseDown, new Listener()
         {
             @Override
             public void handleEvent(Event arg0)
             {
-                GameController.getInstance().goToScene(ScreenType.RATING);
+                GameController.getInstance().goToScene(ScreenType.OPTIONS);
             }
         });
 

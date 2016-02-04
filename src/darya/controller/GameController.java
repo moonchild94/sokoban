@@ -21,7 +21,10 @@ public class GameController implements IController
         return instance;
     }
 
+    private boolean isGameStarted = false;
+
     private Display display;
+
     private Composite composite;
 
     private Map<ScreenType, AbstractController> screens = Maps.newHashMap();
@@ -63,8 +66,18 @@ public class GameController implements IController
         screens.put(ScreenType.MENU, new MenuScreenController(display, composite));
         screens.put(ScreenType.GAME, new GameScreenController(display, composite));
         screens.put(ScreenType.CONTINUE, screens.get(ScreenType.GAME));
-        screens.put(ScreenType.RATING, new RatingScreenController(display, composite));
+        screens.put(ScreenType.OPTIONS, new OptionsScreenController(display, composite));
         screens.put(ScreenType.MAP_EDITOR, new MapEditorScreenController(display, composite));
+    }
+
+    public boolean isGameStarted()
+    {
+        return isGameStarted;
+    }
+
+    public void setGameStarted(boolean isGameStarted)
+    {
+        this.isGameStarted = isGameStarted;
     }
 
     private void clear()

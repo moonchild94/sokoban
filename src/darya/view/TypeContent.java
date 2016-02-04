@@ -1,4 +1,4 @@
-package src.darya.levelBuilder;
+package src.darya.view;
 
 public enum TypeContent
 {
