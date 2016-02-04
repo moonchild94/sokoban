@@ -8,9 +8,6 @@ import java.util.TimerTask;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -74,11 +71,7 @@ public class GameScreenController extends AbstractController
     private class StopwatchTask extends TimerTask
     {
         {
-            timerLabel = new Label(getComposite(), SWT.NONE);
-            timerLabel.setBounds(5, 5, 100, 35);
-            timerLabel.setFont(new Font(getComposite().getDisplay(), "Arial", 20, SWT.NONE));
-            timerLabel.setBackground(new Color(getComposite().getDisplay(), new RGB(0, 0, 0), 0));
-            timerLabel.setForeground(new Color(getComposite().getDisplay(), new RGB(255, 255, 255)));
+            timerLabel = ((GameView)getView()).createTimerLabel();
             timerLabel.setText(String.valueOf(levelTime));
         }
 

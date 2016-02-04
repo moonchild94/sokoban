@@ -24,6 +24,17 @@ public class GameView implements View
         init();
     }
 
+    public Label createTimerLabel()
+    {
+        timerLabel = new Label(composite, SWT.NONE);
+        timerLabel.setBounds(5, 5, 100, 35);
+        timerLabel.setFont(new Font(composite.getDisplay(), "Arial", 20, SWT.NONE));
+        timerLabel.setBackground(new Color(composite.getDisplay(), new RGB(0, 0, 0), 0));
+        timerLabel.setForeground(new Color(composite.getDisplay(), new RGB(255, 255, 255)));
+
+        return timerLabel;
+    }
+
     public Button getHelpButton()
     {
         return helpButton;
