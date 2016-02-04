@@ -10,7 +10,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -22,7 +21,6 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import com.google.common.collect.Maps;
 
-import src.darya.common.Constants;
 import src.darya.model.Box;
 import src.darya.model.CollisionObject;
 import src.darya.model.Direction;
@@ -32,6 +30,7 @@ import src.darya.model.LevelData;
 import src.darya.model.MovableObject;
 import src.darya.model.Player;
 import src.darya.model.Wall;
+import src.darya.view.GameView;
 
 public class GameScreenController extends AbstractController
 {
@@ -139,7 +138,7 @@ public class GameScreenController extends AbstractController
             totalTime = 0;
         }
 
-        addHelpButton();
+        setView(new GameView(getComposite()));
         createSimpleViews();
         addListeners();
         createTimer();
@@ -147,12 +146,9 @@ public class GameScreenController extends AbstractController
         checkCompletion(true);
     }
 
-    private void addHelpButton()
+    private void addHelpButtonListener()
     {
-        Button helpButton = new Button(getComposite(), SWT.PUSH);
-        helpButton.setBounds(220, 5, 35, 35);
-        Image helpButtonImage = new Image(getComposite().getDisplay(), Constants.DIRECTORY_PREFIX + "/question.png");
-        helpButton.setImage(helpButtonImage);
+        Button helpButton = ((GameView)getView()).getHelpButton();
         helpButton.addListener(SWT.MouseDown, new Listener()
         {
             @Override
@@ -177,6 +173,7 @@ public class GameScreenController extends AbstractController
 
     private void addListeners()
     {
+        addHelpButtonListener();
         keyListener = new GameKeyListener();
         getComposite().addKeyListener(keyListener);
     }
@@ -339,13 +336,8 @@ public class GameScreenController extends AbstractController
 
     private void initLevelLabel()
     {
-        levelLabel = new Label(getComposite(), SWT.NONE);
-        levelLabel.setBounds(110, 5, 100, 35);
-        levelLabel.setFont(new Font(getComposite().getDisplay(), "Arial", 20, SWT.NONE));
-        levelLabel.setBackground(new Color(getComposite().getDisplay(), new RGB(0, 0, 0), 0));
-        levelLabel.setForeground(new Color(getComposite().getDisplay(), new RGB(255, 255, 255)));
+        levelLabel = ((GameView)getView()).getLevelLabel();
         updateLevelLabel();
-
     }
 
     private boolean isLastDefaultLevel()
