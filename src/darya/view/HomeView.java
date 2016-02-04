@@ -2,6 +2,8 @@ package src.darya.view;
 
 import org.eclipse.swt.widgets.Composite;
 
+import src.darya.common.Constants;
+
 public class HomeView extends SimpleView
 {
     public HomeView(Composite composite)
@@ -12,7 +14,7 @@ public class HomeView extends SimpleView
     @Override
     protected String getImageView()
     {
-        return "./resources/homeImage.png";
+        return Constants.DIRECTORY_PREFIX + "/homeImage.png";
     }
 
 }

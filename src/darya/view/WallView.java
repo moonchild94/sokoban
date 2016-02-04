@@ -2,6 +2,8 @@ package src.darya.view;
 
 import org.eclipse.swt.widgets.Composite;
 
+import src.darya.common.Constants;
+
 public class WallView extends SimpleView
 {
     public WallView(Composite composite)
@@ -12,7 +14,7 @@ public class WallView extends SimpleView
     @Override
     protected String getImageView()
     {
-        return "./resources/wallImage.jpg";
+        return Constants.DIRECTORY_PREFIX + "/wallImage.jpg";
     }
 
 }

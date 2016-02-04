@@ -2,6 +2,8 @@ package src.darya.view;
 
 import org.eclipse.swt.widgets.Composite;
 
+import src.darya.common.Constants;
+
 public class BoxView extends SimpleView
 {
     public BoxView(Composite composite)
@@ -12,7 +14,7 @@ public class BoxView extends SimpleView
     @Override
     protected String getImageView()
     {
-        return "./resources/boxImage.jpg";
+        return Constants.DIRECTORY_PREFIX + "/boxImage.jpg";
     }
 
 }

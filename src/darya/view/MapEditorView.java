@@ -5,6 +5,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
+import src.darya.common.Constants;
+
 public class MapEditorView implements View
 {
     private Composite composite;
@@ -38,14 +40,14 @@ public class MapEditorView implements View
     {
         helpButton = new Button(composite, SWT.PUSH);
         helpButton.setBounds(110, 0, 35, 35);
-        Image helpButtonImage = new Image(composite.getDisplay(), "./resources/question.png");
+        Image helpButtonImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/question.png");
         helpButton.setImage(helpButtonImage);
     }
 
     private void addSaveButton(Composite composite)
     {
         saveButton = new Button(composite, SWT.BORDER);
-        Image saveImage = new Image(composite.getDisplay(), "./resources/saveImage.jpg");
+        Image saveImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/saveImage.jpg");
         saveButton.setImage(saveImage);
         saveButton.setBounds(0, 0, 98, 35);
     }

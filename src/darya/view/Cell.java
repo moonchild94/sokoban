@@ -69,22 +69,22 @@ public class Cell extends Composite
                 switch (count)
                 {
                 case 1:
-                    Image wallImage = new Image(getDisplay(), "./resources/wallImage.jpg");
+                    Image wallImage = new Image(getDisplay(), Constants.DIRECTORY_PREFIX + "/wallImage.jpg");
                     inner.setBackgroundImage(wallImage);
                     typeContent = TypeContent.WALL;
                     break;
                 case 2:
-                    Image boxImage = new Image(getDisplay(), "./resources/boxImage.jpg");
+                    Image boxImage = new Image(getDisplay(), Constants.DIRECTORY_PREFIX + "/boxImage.jpg");
                     inner.setBackgroundImage(boxImage);
                     typeContent = TypeContent.BOX;
                     break;
                 case 3:
-                    Image homeImage = new Image(getDisplay(), "./resources/homeImage.png");
+                    Image homeImage = new Image(getDisplay(), Constants.DIRECTORY_PREFIX + "/homeImage.png");
                     inner.setBackgroundImage(homeImage);
                     typeContent = TypeContent.HOME;
                     break;
                 case 4:
-                    Image playerImage = new Image(getDisplay(), "./resources/playerImage.png");
+                    Image playerImage = new Image(getDisplay(), Constants.DIRECTORY_PREFIX + "/playerImage.png");
                     inner.setBackgroundImage(playerImage);
                     typeContent = TypeContent.PLAYER;
                     break;

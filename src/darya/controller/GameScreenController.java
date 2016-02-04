@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import com.google.common.collect.Maps;
 
+import src.darya.common.Constants;
 import src.darya.model.Box;
 import src.darya.model.CollisionObject;
 import src.darya.model.Direction;
@@ -150,7 +151,7 @@ public class GameScreenController extends AbstractController
     {
         Button helpButton = new Button(getComposite(), SWT.PUSH);
         helpButton.setBounds(220, 5, 35, 35);
-        Image helpButtonImage = new Image(getComposite().getDisplay(), "./resources/question.png");
+        Image helpButtonImage = new Image(getComposite().getDisplay(), Constants.DIRECTORY_PREFIX + "/question.png");
         helpButton.setImage(helpButtonImage);
         helpButton.addListener(SWT.MouseDown, new Listener()
         {

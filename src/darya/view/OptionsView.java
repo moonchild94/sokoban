@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
+import src.darya.common.Constants;
 import src.darya.common.GameMusic;
 
 public class OptionsView implements View
@@ -46,8 +47,8 @@ public class OptionsView implements View
 
         switcher = new Button(composite, SWT.TOGGLE);
         switcher.setBounds(160, 12, 30, 30);
-        Image imageOn = new Image(composite.getDisplay(), "./resources/musicOnImage.jpg");
-        Image imageOff = new Image(composite.getDisplay(), "./resources/musicOffImage.jpg");
+        Image imageOn = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/musicOnImage.jpg");
+        Image imageOff = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/musicOffImage.jpg");
 
         if (GameMusic.isPlay())
         {

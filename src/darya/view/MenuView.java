@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import com.google.common.collect.Maps;
 
+import src.darya.common.Constants;
 import src.darya.controller.GameController;
 
 public class MenuView implements View
@@ -38,7 +39,7 @@ public class MenuView implements View
 
         Button newGameButton = new Button(composite, SWT.PUSH);
         buttons.put(MenuElement.NEW_GAME, newGameButton);
-        Image newGameImage = new Image(composite.getDisplay(), "./resources/newGameImage.jpg");
+        Image newGameImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/newGameImage.jpg");
         newGameButton.setImage(newGameImage);
         newGameButton.setBounds(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT);
         buttonY += BUTTON_HEIGHT + 20;
@@ -47,7 +48,7 @@ public class MenuView implements View
         {
             Button continueButton = new Button(composite, SWT.PUSH);
             buttons.put(MenuElement.CONTINUE, continueButton);
-            Image continueImage = new Image(composite.getDisplay(), "./resources/continueImage.jpg");
+            Image continueImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/continueImage.jpg");
             continueButton.setImage(continueImage);
             continueButton.setBounds(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT);
             buttonY += BUTTON_HEIGHT + 20;
@@ -55,21 +56,21 @@ public class MenuView implements View
 
         Button optionsButton = new Button(composite, SWT.PUSH);
         buttons.put(MenuElement.OPTIONS, optionsButton);
-        Image optionsImage = new Image(composite.getDisplay(), "./resources/optionsImage.jpg");
+        Image optionsImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/optionsImage.jpg");
         optionsButton.setImage(optionsImage);
         optionsButton.setBounds(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT);
         buttonY += BUTTON_HEIGHT + 20;
 
         Button mapEditorButton = new Button(composite, SWT.PUSH);
         buttons.put(MenuElement.MAP_EDITOR, mapEditorButton);
-        Image mapEditorImage = new Image(composite.getDisplay(), "./resources/mapEditorImage.jpg");
+        Image mapEditorImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/mapEditorImage.jpg");
         mapEditorButton.setImage(mapEditorImage);
         mapEditorButton.setBounds(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT);
         buttonY += BUTTON_HEIGHT + 20;
 
         Button exitButton = new Button(composite, SWT.PUSH);
         buttons.put(MenuElement.EXIT, exitButton);
-        Image exitImage = new Image(composite.getDisplay(), "./resources/exitImage.jpg");
+        Image exitImage = new Image(composite.getDisplay(), Constants.DIRECTORY_PREFIX + "/exitImage.jpg");
         exitButton.setImage(exitImage);
         exitButton.setBounds(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT);
     }
