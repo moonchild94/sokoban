@@ -53,11 +53,11 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.sun</groupId>
+            <groupId>com.oracle</groupId>
             <artifactId>jfxswt</artifactId>
-            <version>1.8.0_72</version>
+            <version>1.8</version>
             <scope>system</scope>
-            <systemPath>${JAVA_HOME}\jre\lib\jfxswt.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/java/libs/jfxswt.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
