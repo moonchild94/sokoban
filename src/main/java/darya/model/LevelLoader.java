@@ -25,7 +25,7 @@ public class LevelLoader
         else
         {
             String fileNameFormat = Constants.DIRECTORY_LEVELS_PREFIX + "/level%d.xml";
-            file = ResourceHelper.getFile(String.format(fileNameFormat, level));
+            file = ResourceHelper.getBinaryFile(String.format(fileNameFormat, level));
         }
         GameObjects gameObjects = (GameObjects)XMLHelper.unwrapFromXML(file, GameObjects.class);
         return gameObjects;

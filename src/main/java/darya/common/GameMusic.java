@@ -27,7 +27,7 @@ public class GameMusic
         FXCanvas canvas = new FXCanvas(shell, SWT.NONE);
         Scene scene = new Scene(new BorderPane());
         canvas.setScene(scene);
-        File audioFile = ResourceHelper.getFile(Constants.DIRECTORY_COMMON_PREFIX + "/soundtrack.mp3");
+        File audioFile = ResourceHelper.getBinaryFile(Constants.DIRECTORY_COMMON_PREFIX + "/soundtrack.mp3");
         Media hit = new Media(audioFile.getAbsoluteFile().toURI().toString());
         mediaPlayer = new MediaPlayer(hit);
         mediaPlayer.setCycleCount(Integer.MAX_VALUE);
